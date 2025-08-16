@@ -2,9 +2,8 @@
 
 import { WaitlistFormValues, waitlistSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Toast, { ToastProps, ToastType } from "./Toast";
+import { useToast } from "./Toast";
 
 export default function WaitlistForm() {
   const {
@@ -15,17 +14,12 @@ export default function WaitlistForm() {
     resolver: zodResolver(waitlistSchema),
   });
 
-  const [toast, setToast] = useState<ToastProps | null>(null);
-
-  const showToast = (message: string, type: ToastType) => {
-    setToast({ message, type });
-    setTimeout(() => setToast(null), 1500);
-  };
+  const { showToast } = useToast();
 
   const onSubmit = async (data: WaitlistFormValues) => {
     console.log("Data form valid: ", data);
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    showToast(`email ${data.email} valid dan siap dikirim`, 'success');
+    showToast(`email ${data.email} valid dan siap dikirim`, "success");
   };
 
   return (
@@ -44,7 +38,7 @@ export default function WaitlistForm() {
 
           {errors.email && (
             <p className="text-red-400 text-sm mt-1">{errors.email?.message}</p>
-          )}  
+          )}
         </div>
 
         {/* checkbox */}
@@ -73,7 +67,6 @@ export default function WaitlistForm() {
         {isSubmitting ? "Memeriksa" : "Daftar Tunggu"}
       </button>
 
-      {toast && <Toast message={toast.message} type={toast.type}></Toast>}
     </form>
   );
 }
