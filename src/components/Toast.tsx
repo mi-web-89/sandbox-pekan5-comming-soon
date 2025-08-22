@@ -25,7 +25,7 @@ const ToastContext = createContext<ToastContextValue | undefined>(undefined);
 
 export const useToast = () => {
   const ctx = useContext(ToastContext);
-  if (!ctx) throw new Error("useToast must be used within ToastPorvider");
+  if (!ctx) throw new Error("useToast harus digunakan didalam ToastPorvider");
   return ctx;
 };
 
@@ -43,7 +43,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      <div className="fixed top-4 right-4 space-y-2">
+      <div className="fixed top-4 right-4 space-y-2 z-60">
         {toasts.map((toast) => (
           <div key={toast.id} className={`px-4 py-2 rounded shadow-lg text-white ${typeStyles[toast.type]}`}>
             {toast.message}

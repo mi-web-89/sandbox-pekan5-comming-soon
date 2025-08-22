@@ -2,6 +2,9 @@ import { z } from "zod";
 
 // mendefinisikan skema
 export const waitlistSchema = z.object({
+  username: z
+    .string()
+    .min(3, { message: "minimal harus 3 karakter" }),
   email: z
     .string() // harus string
     .min(1, { message: "Email tidak boleh kosong" }) // aturan 1: email tidak kosong
